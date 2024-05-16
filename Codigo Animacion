@@ -1,0 +1,52 @@
+Este es el codigo #!/usr/bin/python3
+# Gael
+
+from manim import *
+
+class TransformFunctionWithDetailedLatex(Scene):
+    def construct(self):
+        # Texto introductorio actualizado
+        intro_text = Text("Demostración de la transformación de una función cúbica a una cuadrática.", font_size=24)
+        self.play(Write(intro_text), run_time=5)
+        self.play(FadeOut(intro_text), run_time=2)
+
+        # Definición de las ecuaciones y los pasos matemáticos en LaTeX
+        cubic_eq = MathTex("f(x) = x^3 - 3x", color=BLUE)
+        step1 = MathTex(r"\text{Paso 1: Reducir el grado máximo.}", color=WHITE)
+        step2 = MathTex(r"\text{Paso 2: Simplificar la expresión.}", color=WHITE)
+        quadratic_eq = MathTex("g(x) = x^2 - 3", color=GREEN)
+
+        # Posicionamiento de los textos
+        step1.next_to(cubic_eq, DOWN)
+        step2.next_to(step1, DOWN)
+        quadratic_eq.next_to(step2, DOWN)
+
+        # Muestra la ecuación cúbica y el primer paso
+        self.play(Write(cubic_eq), run_time=3)
+        self.play(Write(step1), run_time=4)
+
+        # Explicación de la simplificación
+        self.play(Write(step2), run_time=4)
+
+        # Transición a la ecuación cuadrática
+        self.play(ReplacementTransform(cubic_eq, quadratic_eq), run_time=4)
+        self.play(FadeOut(step1), FadeOut(step2), run_time=2)
+
+        # Gráficos de las funciones con explicaciones
+        graph_cubic = FunctionGraph(lambda x: x**3 - 3*x, x_range=[-3, 3], color=BLUE)
+        graph_quadratic = FunctionGraph(lambda x: x**2 - 3, x_range=[-3, 3], color=GREEN)
+        graph_explanation = Text("La gráfica cúbica se transforma en una cuadrática.", font_size=24).to_edge(DOWN)
+
+        # Muestra y transforma las gráficas
+        self.play(Create(graph_cubic), run_time=4)
+        self.play(Write(graph_explanation), run_time=3)
+        self.play(Transform(graph_cubic, graph_quadratic), run_time=5)
+
+        # Conclusión con detalles adicionales
+        conclusion_text = Text("Conclusión: la función ahora es cuadrática.", font_size=24).to_edge(DOWN)
+        self.play(FadeOut(graph_cubic), FadeOut(graph_explanation), Create(graph_quadratic), run_time=3)
+        self.play(Write(conclusion_text), run_time=4)
+
+        # Finaliza mostrando la nueva ecuación con tiempo para absorber la información
+        self.play(Write(quadratic_eq), run_time=3)
+        self.play(FadeOut(quadratic_eq), FadeOut(conclusion_text), FadeOut(graph_quadratic), run_time=2)
